@@ -13,8 +13,26 @@ typedef unsigned char TTYPE;
 
 typedef int ROW[MAX_CHARS];
 
+/*
+ * 添加一个新的状态
+ * 并返回一个新的DFA状态号(DStates索引)
+ *
+ */
 int add_to_dstates(NFA_set, accepting_string, anchor)
 {
+	int nextstate;
+
+	if (Nstates > (DFA_MAX - 1))
+		ferr("太多状态了\n");
+
+	/* 增加状态号 */
+	nextstate = Nstates++;
+	
+	Dstates[nextstate].set = NFA_set;
+	Dstates[nextstate].accept = accepting_string;
+	Dstates[nextstate].anchor = anchor;
+
+	return nextstate;
 }
 
 /**
@@ -38,4 +56,25 @@ PRIVATE int in_dstates(SET* NFA_set)
 PRIVATE DFA_STATE* get_unmarked()
 {
 
+}
+
+PRIVATE void make_tran(int sstate)
+{
+	SET *NFA_set;
+	
+	DFA_STATE *current;
+
+	int nextstate;
+
+	char *isaccept;
+
+	int anchor;
+
+	int c;
+
+	NFA_set = newset();
+
+	put('\n', stderr);
+
+	free_sets();
 }
